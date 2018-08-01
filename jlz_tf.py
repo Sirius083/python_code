@@ -238,4 +238,4 @@ W = tf.get_variable("big_matrix", shape = (784,10), initializer = tf.zeros_initi
 
 # tensorboard
 # tensorboard --logdir=./graphs --port 6006  # using a linux style path
-tensorboard --logdir=./normal_loading --port 6006  # using a linux style path
+# tensorboard --logdir=./normal_loading --port 6006  # using a linux style path
