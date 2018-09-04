@@ -10,3 +10,12 @@ with open('tiny_test.pickle', 'wb') as handle:
 
 with open('tiny_train.pickle', 'rb') as handle:
     images_decode = pickle.load(handle)
+   
+
+
+# 改成one-hot编码
+a = np.array([1, 0, 3])
+b = np.zeros((3, 4))
+b[np.arange(3), a] = 1
+print(b)
+
