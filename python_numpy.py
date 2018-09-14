@@ -19,3 +19,6 @@ b = np.zeros((3, 4))
 b[np.arange(3), a] = 1
 print(b)
 
+# 检查一个object的类型是否为 np.ndarray
+# version1: isinstance(obj, np.ndarray)
+# version2: type(obj) is np.ndarray
