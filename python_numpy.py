@@ -430,6 +430,166 @@ data1 = pickle.load(pkl_file)
 pprint.pprint(data1)
 pkl_file.close()
 
+# -*- coding: utf-8 -*-
+"""
+Created on Tue Nov  6 11:13:53 2018
+
+@author: Sirius
+
+
+"""
+#========================================================
+# version 1
+# We will add the vector v to each row of the matrix x,
+# storing the result in the matrix y
+
+import numpy as np
+x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+v = np.array([1, 0, 1])
+y = np.empty_like(x)   # Create an empty matrix with the same shape as x
+
+# Add the vector v to each row of the matrix x with an explicit loop
+for i in range(4):
+    y[i, :] = x[i, :] + v
+
+# Now y is the following
+# [[ 2  2  4]
+#  [ 5  5  7]
+#  [ 8  8 10]
+#  [11 11 13]]
+print(y)
+
+
+#========================================================
+# version 2
+# equivalent to forming a matrix vv by stacking multiple copies of v vertivally
+# perform elementwise summation of x and vv
+
+import numpy as np
+
+# We will add the vector v to each row of the matrix x,
+# storing the result in the matrix y
+x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+v = np.array([1, 0, 1])
+vv = np.tile(v, (4, 1))   # Stack 4 copies of v on top of each other
+print(vv)                 # Prints "[[1 0 1]
+                          #          [1 0 1]
+                          #          [1 0 1]
+                          #          [1 0 1]]"
+y = x + vv  # Add x and vv elementwise
+print(y)  # Prints "[[ 2  2  4
+          #          [ 5  5  7]
+          #          [ 8  8 10]
+          #          [11 11 13]]"
+
+
+#========================================================
+# version 3
+# numpy works it out automatically
+# y = x + v works even though x has shape (4,3) 
+# v has shape (3,)
+# this line works as if v actually had shape (4,3) where each row was a copy of v 
+
+import numpy as np
+
+# We will add the vector v to each row of the matrix x,
+# storing the result in the matrix y
+x = np.array([[1,2,3], [4,5,6], [7,8,9], [10, 11, 12]])
+v = np.array([1, 0, 1])
+y = x + v  # Add v to each row of x using broadcasting
+print(y)  # Prints "[[ 2  2  4]
+          #          [ 5  5  7]
+          #          [ 8  8 10]
+          #          [11 11 13]]"
+                
+# np.matmul for two 3D tensors
+import numpy as np
+a_tmp = np.reshape(np.arange(1, 13, dtype=np.int32),[2, 2, 3])
+b_tmp = np.reshape(np.arange(13, 25, dtype=np.int32),[2, 3, 2])
+np.matmul(a_tmp[0,:,:],b_tmp[0,:,:])
+np.matmul(a_tmp[1,:,:],b_tmp[1,:,:])
+np.matmul(a_tmp,b_tmp)
+
+# a * b # elementwise multiply
+# np.matmul(a,b)
+
+# 3-D tensor `a`
+# [[[ 1,  2,  3],
+#   [ 4,  5,  6]],
+#  [[ 7,  8,  9],
+#   [10, 11, 12]]]
+import tensorflow as tf
+a = tf.constant(np.arange(1, 13, dtype=np.int32),
+                shape=[2, 2, 3])
+
+# 3-D tensor `b`
+# [[[13, 14],
+#   [15, 16],
+#   [17, 18]],
+#  [[19, 20],
+#   [21, 22],
+#   [23, 24]]]
+b = tf.constant(np.arange(13, 25, dtype=np.int32),
+                shape=[2, 3, 2])
+
+# `a` * `b`
+# [[[ 94, 100],
+#   [229, 244]],
+#  [[508, 532],
+#   [697, 730]]]
+c = tf.matmul(a, b)
+with tf.Session() as sess:
+    c_sess = sess.run(c)
+    print(c_sess)
+    
+    
+
+#========================================================
+# np.array reshape
+import numpy as np
+a = np.reshape(np.arange(1, 13, dtype=np.int32),[2, 2, 3])
+a_reshape = np.reshape(a,[2, 3, 2])
+a_transpose = np.transpose(a,[0,2,1])
+print('a',a)
+print('a_reshape', a_reshape)
+print('a_transpose', a_transpose)
+
+
+# [72,16] * [1250,72,1]
+a = np.zeros((72,16))
+b = np.zeros((1250,72,1))
+c = a * b # (1250,72,16)
+
+
+# 对不同维度的点乘进行验证 
+a = np.zeros([1250,72,16,16])
+b = np.zeros([1250,72,16,1])
+c = a * b
+print(c.shape)
+
+# 样本维度不一致时，直接boardcasting乘
+a = np.reshape(np.arange(1, 13, dtype=np.int32),[2, 2, 3])
+b = np.reshape(np.arange(1, 5, dtype=np.int32),[2, 2, 1])
+print('===============')
+print(a)
+print('===============')
+print(b)
+print('===============')
+print(a*b)
+
+
+a_tmp = np.reshape(a,[2, 2, 3,1])
+
+import tensorflow as tf
+c = tf.log(10.0)
+with tf.Session() as sess:
+    c = sess.run(c)
+    print(c)
+
+
+
+
+
 
 
 
