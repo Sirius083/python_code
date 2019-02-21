@@ -54,6 +54,11 @@ sammy_string = "Sammy loves {:20s} {}, and has {} {}."                      #4 {
 print(sammy_string.format("open-source", "software", 5, "balloons"))    #Pass 4 strings into method
 
 
+# format percentage  
+# print ("{0:.0%}".format(1./3))  
+# print ("{:.2%}".fotmat(15.84)) # print percentage with two decimal
+    
+
 
 
 
